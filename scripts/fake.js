@@ -23,4 +23,13 @@ function Department() {
       ["6", "工程物资部"],
     ]
   );
+  Process("models.project.save", {
+    address: "北京市海定区",
+    introduction: "给城市排水功能",
+    mobile: "15041257451",
+    name: "城市排水项目",
+    project_sn: "XM_001",
+    remark: "暂无备注",
+    user_id: 1,
+  });
 }
