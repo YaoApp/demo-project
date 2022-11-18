@@ -64,19 +64,24 @@ function Data(params) {
   if (depart && depart.length) {
     d_num = depart[0].num;
   }
-  // 预算产值,累计产值,累计收款,累计欠款
-  var money = query.Get({
-    wheres: [{ ":deleted_at": "删除", "=": null }],
-    select: [
-      ":SUM(budget_money) as budget_money",
-      ":SUM(acu_money) as acu_money",
-      ":SUM(collect_money) as collect_money",
-      ":SUM(owe_money) as owe_money",
-      ":date_format(created_at, '%Y-%m-%d') as times",
-    ],
-    from: "contract_finance",
-    groups: "times",
-  });
+  try {
+    // 预算产值,累计产值,累计收款,累计欠款
+    var money = query.Get({
+      wheres: [{ ":deleted_at": "删除", "=": null }],
+      select: [
+        ":SUM(budget_money) as budget_money",
+        ":SUM(acu_money) as acu_money",
+        ":SUM(collect_money) as collect_money",
+        ":SUM(owe_money) as owe_money",
+        ":date_format(created_at, '%Y-%m-%d') as times",
+      ],
+      from: "contract_finance",
+      groups: "times",
+    });
+  } catch (err) {
+   var money = [];
+  }
+
   // console.log(money);
   var budget_money = [];
   var acu_money = [];
