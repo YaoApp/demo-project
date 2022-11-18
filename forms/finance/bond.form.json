@@ -1,0 +1,385 @@
+{
+  "action": {
+    "bind": {
+      "model": "bond",
+      "option": {
+        "withs": { "user": {}, "company": {} }
+      }
+    },
+    "before:save": "scripts.bond.BeforeSave"
+  },
+  "layout": {
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "width": 8,
+              "name": "所属项目",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "所属项目"
+                }
+              ]
+            },
+            {
+              "width": 8,
+              "name": "保证金名称",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "保证金名称"
+                }
+              ]
+            },
+            {
+              "name": "状态",
+              "width": 8
+            },
+            {
+              "name": "申请人",
+              "width": 8
+            },
+            {
+              "name": "申请日期",
+              "width": 8
+            },
+            {
+              "name": "保证金类型",
+              "width": 8
+            },
+
+            {
+              "name": "收款账户户名",
+              "width": 8
+            },
+            {
+              "name": "收款账户开户行",
+              "width": 8
+            },
+            {
+              "name": "收款账户账号",
+              "width": 8
+            },
+            {
+              "name": "预计付款日期",
+              "width": 8
+            },
+            {
+              "name": "预计账款周期",
+              "width": 8
+            },
+
+            {
+              "name": "申请金额",
+              "width": 8
+            },
+            {
+              "name": "备注",
+              "width": 24
+            }
+          ]
+        },
+        {
+          "title": "退款信息",
+
+          "columns": [
+            {
+              "name": "退回金额",
+              "width": 12
+            },
+            {
+              "name": "剩余金额",
+              "width": 12
+            },
+
+            {
+              "name": "实际付款日期",
+              "width": 12
+            },
+            {
+              "name": "退款日期",
+              "width": 12
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "primary": "id",
+    "operation": {
+      "preset": {
+        "save": {
+          "back": true
+        },
+        "back": {}
+      },
+      "actions": [
+        {
+          "confirm": {
+            "title": "提示",
+            "desc": "确认删除，删除后数据无法恢复？"
+          },
+          "title": "删除",
+          "icon": "icon-trash-2",
+          "action": {
+            "Form.delete": {
+              "pathname": "/x/Table/finance.bond"
+            }
+          },
+          "style": "danger"
+        }
+      ]
+    }
+  },
+  "fields": {
+    "form": {
+      "保证金名称": {
+        "edit": {
+          "props": {},
+          "type": "Input",
+          "bind": "name"
+        },
+        "bind": "name",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "所属项目": {
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.InitSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "project_id"
+      },
+
+      "申请金额": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "total_money"
+        },
+        "bind": "total_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "申请日期": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "apply_date",
+          "props": {}
+        },
+        "bind": "apply_date",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+      "申请人": {
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.contact.user.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "user_id"
+      },
+      "保证金类型": {
+        "edit": {
+          "props": {
+            "options": [
+              {
+                "labe": "::投标保证金",
+                "value": "投标保证金"
+              },
+              {
+                "labe": "::履约保证金",
+                "value": "履约保证金"
+              },
+              {
+                "labe": "::质量保证金",
+                "value": "质量保证金"
+              },
+
+              {
+                "labe": "::其他",
+                "value": "其他"
+              }
+            ],
+            "placeholder": "请选择"
+          },
+          "type": "Select"
+        },
+        "bind": "type",
+        "view": {
+          "type": "Text",
+          "props": {}
+        }
+      },
+
+      "收款账户户名": {
+        "edit": {
+          "props": {},
+          "type": "Input"
+        },
+        "bind": "in_name"
+      },
+      "收款账户开户行": {
+        "edit": {
+          "props": {},
+          "type": "Input"
+        },
+        "bind": "in_bank"
+      },
+      "收款账户账号": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "in_account"
+        },
+        "bind": "in_account",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "预计账款周期": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "pay_day"
+        },
+        "bind": "pay_day"
+      },
+      "退回金额": {
+        "edit": {
+          "props": {
+            "disabled": true,
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "back_money"
+        },
+        "bind": "back_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "剩余金额": {
+        "edit": {
+          "props": {
+            "disabled": true,
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "left_money"
+        },
+        "bind": "left_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "预计付款日期": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "pre_date",
+          "props": {}
+        },
+        "bind": "pre_date",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+      "实际付款日期": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "pay_date",
+          "props": { "disabled": true }
+        },
+        "bind": "pay_date",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+      "退款日期": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "back_date",
+          "props": { "disabled": true }
+        },
+        "bind": "back_date",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+      "备注": {
+        "edit": {
+          "props": { "rows": 5 },
+          "type": "TextArea",
+          "bind": "remark"
+        },
+        "bind": "remark"
+      },
+      "状态": {
+        "edit": {
+          "props": {
+            "disabled": true,
+            "options": [
+              {
+                "labe": "::已申请",
+                "value": "已申请"
+              },
+              {
+                "labe": "::已通过",
+                "value": "已通过"
+              },
+              {
+                "labe": "::已退还",
+                "value": "已退还"
+              }
+            ],
+            "placeholder": "请选择"
+          },
+          "type": "Select"
+        },
+        "bind": "status"
+      }
+    }
+  },
+  "name": "保证金"
+}

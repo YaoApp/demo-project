@@ -1,0 +1,207 @@
+{
+  "name": "人员规划",
+  "action": {
+    "bind": {
+      "model": "member",
+      "option": {
+        "withs": { "project": {}, "user": {} }
+      }
+    },
+    "after:search":"scripts.member.AfterSearch"
+  },
+  "layout": {
+    "primary": "id",
+    "header": {
+      "preset": {},
+      "actions": []
+    },
+    "filter": {
+      "columns": [
+        {
+          "name": "项目名称",
+          "width": 4
+        },
+        {
+          "name": "工作内容",
+          "width": 4
+        }
+      ],
+      "actions": [
+        {
+          "icon": "icon-plus",
+          "width": 3,
+          "action": {
+            "Common.openModal": {
+              "width": 640,
+              "Form": {
+                "type": "edit",
+                "model": "member"
+              }
+            }
+          },
+          "title": "添加"
+        }
+      ]
+    },
+    "table": {
+      "columns": [
+        {
+          "name": "项目名称"
+        },
+        {
+          "name": "工作内容"
+        },
+        {
+          "name": "专业"
+        },
+        {
+          "name": "负责人"
+        },
+        {
+          "name": "状态"
+        },
+        {
+          "name": "添加日期"
+        }
+      ],
+      "operation": {
+        "fold": false,
+        "actions": [
+          {
+            "action": {
+              "Common.openModal": {
+                "width": 640,
+                "Form": {
+                  "type": "view",
+                  "model": "member"
+                }
+              }
+            },
+            "title": "查看",
+            "icon": "icon-eye"
+          },
+          {
+            "title": "编辑",
+            "icon": "icon-edit-2",
+            "action": {
+              "Common.openModal": {
+                "Form": {
+                  "type": "edit",
+                  "model": "member"
+                }
+              }
+            }
+          },
+          {
+            "icon": "icon-trash-2",
+            "action": {
+              "Table.delete": {}
+            },
+            "style": "danger",
+            "confirm": {
+              "title": "提示",
+              "desc": "确认删除，删除后数据无法恢复？"
+            },
+            "title": "删除"
+          }
+        ]
+      }
+    }
+  },
+  "fields": {
+    "filter": {
+      "项目名称": {
+        "bind": "where.project_id.eq",
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.InitSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        }
+      },
+      "工作内容": {
+        "bind": "where.name.match",
+        "edit": {
+          "type": "Input",
+          "compute": "Trim",
+          "props": {
+            "placeholder": "请输入工作内容搜索"
+          }
+        }
+      }
+    },
+    "table": {
+      "项目名称": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.InitSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "project.name"
+      },
+      "工作内容": {
+        "bind": "name",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "状态": {
+        "bind": "status",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "专业": {
+        "bind": "department",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "添加日期": {
+        "bind": "created_at",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+      "负责人": {
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.contact.user.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "user.name",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      }
+    }
+  }
+}

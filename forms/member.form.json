@@ -1,0 +1,170 @@
+{
+  "action": {
+    "bind": {
+      "model": "member",
+      "option": {
+        "withs": { "project": {}, "user": {} }
+      }
+    }
+  },
+  "layout": {
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "width": 12,
+              "name": "项目名称"
+            },
+            {
+              "width": 12,
+              "name": "工作内容"
+            },
+            {
+              "name": "负责人",
+              "width": 12
+            },
+            {
+              "name": "状态",
+              "width": 12
+            },
+            {
+              "name": "专业",
+              "width": 24
+            },
+
+            {
+              "name": "备注",
+              "width": 24
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "primary": "id",
+    "operation": {
+      "preset": {
+        "save": {
+          "back": true
+        },
+        "back": {}
+      },
+      "actions": [
+        {
+          "confirm": {
+            "title": "提示",
+            "desc": "确认删除，删除后数据无法恢复？"
+          },
+          "title": "删除",
+          "icon": "icon-trash-2",
+          "action": {
+            "Form.delete": {
+              "pathname": "/x/Table/project.member"
+            }
+          },
+          "style": "danger"
+        }
+      ]
+    }
+  },
+  "fields": {
+    "form": {
+      "项目名称": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.InitSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "project_id"
+      },
+      "工作内容": {
+        "bind": "name",
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "type": "Input",
+          "props": {}
+        }
+      },
+      "状态": {
+        "bind": "status",
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "options": [
+              {
+                "labe": "::进行中",
+                "value": "进行中"
+              },
+              {
+                "labe": "::已完成",
+                "value": "已完成"
+              }
+            ],
+            "placeholder": "请选择"
+          },
+          "type": "Select"
+        }
+      },
+      "负责人": {
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.contact.user.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "user_id",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "专业": {
+        "edit": {
+          "props": {
+            "mode": "multiple",
+            "xProps": {
+              "$remote": {
+                "process": "scripts.contact.department.TagSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select",
+          "bind": "department"
+        },
+        "bind": "department"
+      },
+      "备注": {
+        "edit": {
+          "props": { "rows": 5 },
+          "type": "TextArea",
+          "bind": "remark"
+        },
+        "bind": "remark"
+      }
+    }
+  },
+  "name": "成员规划"
+}

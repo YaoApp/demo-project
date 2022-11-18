@@ -1,0 +1,253 @@
+{
+  "name": "保证金",
+  "action": {
+    "bind": {
+      "model": "bond",
+      "option": {
+        "withs": { "project": {}, "user": {} }
+      }
+    }
+  },
+  "layout": {
+    "primary": "id",
+    "header": {
+      "preset": {},
+      "actions": []
+    },
+    "filter": {
+      "columns": [
+        {
+          "name": "名称",
+          "width": 4
+        }
+      ],
+      "actions": [
+        {
+          "icon": "icon-plus",
+          "width": 3,
+          "action": {
+            "Common.historyPush": { "pathname": "/x/Form/finance.bond/0/edit" }
+          },
+          "title": "添加"
+        }
+      ]
+    },
+    "table": {
+      "columns": [
+        {
+          "width": 200,
+          "name": "保证金名称"
+        },
+        {
+          "name": "保证金类型",
+          "width": 150
+        },
+        {
+          "width": 200,
+          "name": "所属项目"
+        },
+        {
+          "name": "申请金额",
+          "width": 150
+        },
+        {
+          "name": "申请日期",
+          "width": 150
+        },
+        {
+          "name": "申请人",
+          "width": 150
+        },
+        {
+          "name": "状态",
+          "width": 150
+        }
+      ],
+      "operation": {
+        "fold": false,
+        "actions": [
+          {
+            "action": {
+              "Common.historyPush": {
+                "pathname": "/x/Form/finance.back_bond/{{id}}/edit"
+              }
+            },
+            "title": "退回保证金",
+            "icon": "icon-plus"
+          },
+
+          {
+            "action": {
+              "Common.openModal": {
+                "width": 640,
+                "Form": {
+                  "type": "view",
+                  "model": "finance.bond"
+                }
+              }
+            },
+            "title": "查看",
+            "icon": "icon-eye"
+          },
+          {
+            "title": "编辑",
+            "icon": "icon-edit-2",
+            "action": {
+              "Common.openModal": {
+                "Form": {
+                  "type": "edit",
+                  "model": "finance.bond"
+                }
+              }
+            }
+          },
+          {
+            "icon": "icon-trash-2",
+            "action": {
+              "Table.delete": {}
+            },
+            "style": "danger",
+            "confirm": {
+              "title": "提示",
+              "desc": "确认删除，删除后数据无法恢复？"
+            },
+            "title": "删除"
+          }
+        ]
+      }
+    }
+  },
+  "fields": {
+    "filter": {
+      "名称": {
+        "bind": "where.name.match",
+        "edit": {
+          "type": "Input",
+          "compute": "Trim",
+          "props": {
+            "placeholder": "请输入名称搜索"
+          }
+        }
+      }
+    },
+    "table": {
+      "保证金名称": {
+        "edit": {
+          "props": {},
+          "type": "Input",
+          "bind": "name"
+        },
+        "bind": "name",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "所属项目": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.InitSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "project.name"
+      },
+
+      "申请金额": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "total_money"
+        },
+        "bind": "total_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "申请日期": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "apply_date",
+          "props": {}
+        },
+        "bind": "apply_date",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+      "申请人": {
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.contact.user.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "user_id",
+        "view": {
+          "bind": "user.name",
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "保证金类型": {
+        "edit": {
+          "props": {
+            "options": [
+              {
+                "labe": "::投标保证金",
+                "value": "投标保证金"
+              },
+              {
+                "labe": "::履约保证金",
+                "value": "履约保证金"
+              },
+              {
+                "labe": "::质量保证金",
+                "value": "质量保证金"
+              },
+
+              {
+                "labe": "::其他",
+                "value": "其他"
+              }
+            ],
+            "placeholder": "请选择"
+          },
+          "type": "Select"
+        },
+        "bind": "type",
+        "view": {
+          "type": "Text",
+          "props": {}
+        }
+      },
+      "状态": {
+        "bind": "status",
+        "view": {
+          "type": "Text",
+          "props": {}
+        }
+      }
+    }
+  }
+}

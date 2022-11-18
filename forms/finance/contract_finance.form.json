@@ -1,0 +1,244 @@
+{
+  "action": {
+    "bind": {
+      "model": "contract_finance",
+      "option": {
+        "withs": { "contract": {}, "company": {} }
+      }
+    }
+  },
+  "layout": {
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "width": 12,
+              "name": "合同名称"
+            },
+            {
+              "name": "记账单位",
+              "width": 12
+            },
+            {
+              "name": "往来单位",
+              "width": 12
+            },
+            {
+              "name": "预算产值",
+              "width": 12
+            },
+            {
+              "width": 12,
+              "name": "累计产值"
+            },
+            {
+              "name": "累计收款",
+              "width": 12
+            },
+            {
+              "name": "累计欠款",
+              "width": 12
+            },
+            {
+              "name": "合同比例%",
+              "width": 12
+            },
+            {
+              "name": "按比例欠款",
+              "width": 12
+            },
+            {
+              "name": "备注",
+              "width": 24
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "primary": "id",
+    "operation": {
+      "preset": {
+        "save": {
+          "back": true
+        },
+        "back": {}
+      },
+      "actions": [
+        {
+          "confirm": {
+            "title": "提示",
+            "desc": "确认删除，删除后数据无法恢复？"
+          },
+          "title": "删除",
+          "icon": "icon-trash-2",
+          "action": {
+            "Form.delete": {
+              "pathname": "/x/Table/finance.contract_finance"
+            }
+          },
+          "style": "danger"
+        }
+      ]
+    }
+  },
+  "fields": {
+    "form": {
+      "合同名称": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.company.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "contract_id"
+      },
+
+      "记账单位": {
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.company.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select",
+          "bind": "in_company_id"
+        },
+        "bind": "in_company_id",
+
+        "view": {
+          "bind": "company.name",
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "往来单位": {
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.company.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "out_company_id",
+
+        "view": {
+          "bind": "second.name",
+          "props": {},
+          "type": "Text"
+        }
+      },
+
+      "预算产值": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "budget_money"
+        },
+        "bind": "budget_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "累计产值": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "acu_money"
+        },
+        "bind": "acu_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "累计收款": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "collect_money"
+        },
+        "bind": "collect_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "累计欠款": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "owe_money"
+        },
+        "bind": "owe_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "合同比例%": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "contract_scale"
+        },
+        "bind": "contract_scale",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "按比例欠款": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "contract_owe"
+        },
+        "bind": "contract_owe",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "备注": {
+        "edit": {
+          "props": { "rows": 5 },
+          "type": "TextArea",
+          "bind": "remark"
+        },
+        "bind": "remark"
+      }
+    }
+  },
+  "name": "统计"
+}

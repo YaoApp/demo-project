@@ -1,0 +1,496 @@
+{
+  "name": "数据图表",
+  "config": {
+    "full": false
+  },
+  "action": {
+    "before:data": "scripts.stat.BeforeData",
+    "data": {
+      "process": "scripts.stat.Data",
+      "default": ["2022-09-20"]
+    },
+    "after:data": "scripts.stat.AfterData"
+  },
+  "layout": {
+    "operation": {
+      "actions": []
+    },
+    "filter": {
+      "columns": []
+    },
+    "chart": {
+      "columns": [
+        {
+          "name": "项目数量",
+          "width": 6
+        },
+        {
+          "name": "合同数量",
+          "width": 6
+        },
+        {
+          "name": "员工数量",
+          "width": 6
+        },
+        {
+          "name": "部门数量",
+          "width": 6
+        },
+
+        {
+          "name": "预算产值(万)",
+          "width": 12
+        },
+        {
+          "name": "累计产值(万)",
+          "width": 12
+        },
+        {
+          "name": "累计收款(万)",
+          "width": 12
+        },
+        {
+          "name": "累计欠款(万)",
+          "width": 12
+        },
+
+        {
+          "name": "项目状态",
+          "width": 24
+        },
+        {
+          "name": "合同金额",
+          "width": 24
+        }
+      ]
+    }
+  },
+  "fields": {
+    "filter": {
+      "时间区间": {
+        "bind": "range",
+        "edit": {
+          "type": "RangePicker",
+          "props": {}
+        }
+      },
+      "状态": {
+        "bind": "status",
+        "edit": {
+          "type": "Select",
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "models.pet.Get",
+                "query": {
+                  "select": "name,status",
+                  "limit": 2
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "chart": {
+      "项目数量": {
+        "bind": "project_count",
+        "link": "/x/Table/project.project",
+        "view": {
+          "type": "Number",
+          "props": {
+            "unit": "个"
+          }
+        }
+      },
+      "合同数量": {
+        "bind": "contract_count",
+        "link": "/x/Table/contract.contract",
+        "view": {
+          "type": "Number",
+          "props": {
+            "unit": "个"
+          }
+        }
+      },
+      "员工数量": {
+        "bind": "user_count",
+        "link": "/x/Table/contact.user",
+        "view": {
+          "type": "Number",
+          "props": {
+            "unit": "个"
+          }
+        }
+      },
+      "部门数量": {
+        "bind": "department_count",
+        "link": "/x/Table/contact.department",
+        "view": {
+          "type": "Number",
+          "props": {
+            "unit": "个"
+          }
+        }
+      },
+      "预算产值(万)": {
+        "bind": "budget_money",
+        "link": "/x/Table/finance.contract_finance",
+        "out": "scripts.stat.Income",
+        "view": {
+          "type": "NumberChart",
+          "props": {
+            "chartHeight": 150,
+            "prefix": "¥",
+            "decimals": 2,
+            "nameKey": "date",
+            "valueKey": "value"
+          }
+        }
+      },
+      "累计产值(万)": {
+        "bind": "acu_money",
+        "link": "/x/Table/finance.contract_finance",
+        "out": "scripts.stat.Income",
+        "view": {
+          "type": "NumberChart",
+          "props": {
+            "chartHeight": 150,
+            "prefix": "¥",
+            "decimals": 2,
+            "nameKey": "date",
+            "valueKey": "value"
+          }
+        }
+      },
+      "累计收款(万)": {
+        "bind": "collect_money",
+        "link": "/x/Table/finance.contract_finance",
+        "out": "scripts.stat.Income",
+        "view": {
+          "type": "NumberChart",
+          "props": {
+            "chartHeight": 150,
+            "prefix": "¥",
+            "decimals": 2,
+            "nameKey": "date",
+            "valueKey": "value"
+          }
+        }
+      },
+      "累计欠款(万)": {
+        "bind": "owe_money",
+        "link": "/x/Table/finance.contract_finance",
+        "out": "scripts.stat.Income",
+        "view": {
+          "type": "NumberChart",
+          "props": {
+            "chartHeight": 150,
+            "prefix": "¥",
+            "decimals": 2,
+            "nameKey": "date",
+            "valueKey": "value"
+          }
+        }
+      },
+      "项目状态": {
+        "bind": "project_status",
+        "view": {
+          "type": "Bar",
+          "props": {
+            "height": 240,
+            "nameKey": "status",
+            "axisLabel": {
+              "interval": 0,
+              "fontSize": 12
+            },
+            "series": [
+              {
+                "valueKey": "count",
+                "type": "bar",
+                "colorBy": "data",
+                "itemStyle": {
+                  "borderRadius": 6
+                },
+                "splitLine": {
+                  "show": false
+                },
+                "axisLabel": {
+                  "show": false
+                }
+              }
+            ]
+          }
+        },
+        "refer": {
+          "type": "Table",
+          "props": {
+            "columns": [
+              {
+                "title": "状态",
+                "dataIndex": "status"
+              },
+              {
+                "title": "数量",
+                "dataIndex": "count"
+              }
+            ]
+          }
+        }
+      },
+      "合同金额": {
+        "bind": "contract_money",
+        "view": {
+          "type": "Bar",
+          "props": {
+            "height": 240,
+            "nameKey": "status",
+            "axisLabel": {
+              "interval": 0,
+              "fontSize": 12
+            },
+            "series": [
+              {
+                "valueKey": "count",
+                "type": "bar",
+                "colorBy": "data",
+                "itemStyle": {
+                  "borderRadius": 6
+                },
+                "splitLine": {
+                  "show": false
+                },
+                "axisLabel": {
+                  "show": false
+                }
+              }
+            ]
+          }
+        },
+        "refer": {
+          "type": "Table",
+          "props": {
+            "columns": [
+              {
+                "title": "状态",
+                "dataIndex": "status"
+              },
+              {
+                "title": "数量",
+                "dataIndex": "count"
+              }
+            ]
+          }
+        }
+      },
+
+      "支出": {
+        "bind": "cost",
+        "link": "/x/Table/pet",
+        "view": {
+          "type": "NumberChart",
+          "props": {
+            "chartHeight": 150,
+            "color": "red",
+            "prefix": "¥",
+            "decimals": 2,
+            "nameKey": "date",
+            "valueKey": "value"
+          }
+        }
+      },
+      "综合评分": {
+        "bind": "rate",
+        "link": "/x/Table/pet",
+        "view": {
+          "type": "NumberChart",
+          "props": {
+            "chartHeight": 150,
+            "color": "orange",
+            "unit": "分",
+            "decimals": 1,
+            "nameKey": "date",
+            "valueKey": "value"
+          }
+        }
+      },
+      "收入_折线图": {
+        "bind": "income",
+        "link": "/x/Table/pet",
+        "view": {
+          "type": "NumberChart",
+          "props": {
+            "cardStyle": {
+              "padding": 0
+            },
+            "type": "line",
+            "chartHeight": 120,
+            "prefix": "¥",
+            "decimals": 2,
+            "nameKey": "date",
+            "valueKey": "value"
+          }
+        }
+      },
+      "支出_折线图": {
+        "bind": "cost",
+        "link": "/x/Table/pet",
+        "view": {
+          "type": "NumberChart",
+          "props": {
+            "cardStyle": {
+              "padding": 0
+            },
+            "type": "line",
+            "chartHeight": 120,
+            "color": "red",
+            "prefix": "¥",
+            "decimals": 2,
+            "nameKey": "date",
+            "valueKey": "value"
+          }
+        }
+      },
+      "综合评分_折线图": {
+        "bind": "rate",
+        "link": "/x/Table/pet",
+        "view": {
+          "type": "NumberChart",
+          "props": {
+            "cardStyle": {
+              "padding": 0
+            },
+            "type": "line",
+            "chartHeight": 120,
+            "color": "orange",
+            "unit": "分",
+            "decimals": 1,
+            "nameKey": "date",
+            "valueKey": "value"
+          }
+        }
+      },
+
+      "宠物类型": {
+        "bind": "pet_type",
+        "view": {
+          "type": "Number",
+          "props": {
+            "unit": "种"
+          }
+        }
+      },
+      "当月收入": {
+        "bind": "income_monthly",
+        "view": {
+          "type": "Number",
+          "props": {
+            "unit": "元"
+          }
+        }
+      },
+      "医师数量": {
+        "bind": "doctor_count",
+        "view": {
+          "type": "Number",
+          "props": {
+            "unit": "个"
+          }
+        }
+      },
+      "宠物数量_上月": {
+        "bind": "prev_pet_count",
+        "link": "/x/Table/pet",
+        "view": {
+          "type": "Number",
+          "props": {
+            "cardStyle": {
+              "padding": 0
+            },
+            "unit": "个",
+            "prev_title": "上月数据"
+          }
+        }
+      },
+      "宠物类型_上月": {
+        "bind": "prev_pet_type",
+        "link": "/x/Table/pet",
+        "view": {
+          "type": "Number",
+          "props": {
+            "cardStyle": {
+              "padding": 0
+            },
+            "unit": "种",
+            "prev_title": "上月数据"
+          }
+        }
+      },
+      "当月收入_上月": {
+        "bind": "prev_income_monthly",
+        "link": "/x/Table/pet",
+        "view": {
+          "type": "Number",
+          "props": {
+            "cardStyle": {
+              "padding": 0
+            },
+            "unit": "元",
+            "prev_title": "上月数据"
+          }
+        }
+      },
+      "医师数量_上月": {
+        "bind": "prev_doctor_count",
+        "link": "/x/Table/pet",
+        "view": {
+          "type": "Number",
+          "props": {
+            "cardStyle": {
+              "padding": 0
+            },
+            "unit": "个",
+            "prev_title": "上月数据"
+          }
+        }
+      },
+      "类型排布": {
+        "bind": "datasource_type",
+        "link": "/x/Table/pet",
+        "view": {
+          "type": "Pie",
+          "props": {
+            "height": 240,
+            "nameKey": "type",
+            "series": [
+              {
+                "valueKey": "count",
+                "roseType": "area",
+                "radius": [10, 100],
+                "center": ["60%", "50%"],
+                "itemStyle": {
+                  "borderRadius": 6
+                }
+              }
+            ]
+          }
+        },
+        "refer": {
+          "type": "Table",
+          "props": {
+            "columns": [
+              {
+                "title": "类型",
+                "dataIndex": "type"
+              },
+              {
+                "title": "数量",
+                "dataIndex": "count"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

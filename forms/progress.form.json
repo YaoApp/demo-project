@@ -1,0 +1,154 @@
+{
+  "action": {
+    "bind": {
+      "model": "progress",
+      "option": {
+        "withs": { "contract": {} }
+      }
+    }
+  },
+  "layout": {
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "width": 12,
+              "name": "工程名称"
+            },
+            {
+              "name": "进度%",
+              "width": 12
+            },
+            {
+              "name": "完成度%",
+              "width": 12
+            },
+            {
+              "name": "状态",
+              "width": 12
+            },
+            {
+              "name": "备注",
+              "width": 24
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "primary": "id",
+    "operation": {
+      "preset": {
+        "save": {
+          "back": true
+        },
+        "back": {}
+      },
+      "actions": [
+        {
+          "confirm": {
+            "title": "提示",
+            "desc": "确认删除，删除后数据无法恢复？"
+          },
+          "title": "删除",
+          "icon": "icon-trash-2",
+          "action": {
+            "Form.delete": {
+              "pathname": "/x/Table/project.progress"
+            }
+          },
+          "style": "danger"
+        }
+      ]
+    }
+  },
+  "fields": {
+    "form": {
+      "工程名称": {
+        "view": {
+          "bind": "contract.name",
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "contract_id"
+      },
+
+      "进度%": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "progress"
+        },
+        "bind": "progress",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "完成度%": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "complete"
+        },
+        "bind": "complete",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "状态": {
+        "edit": {
+          "props": {
+            "options": [
+              {
+                "labe": "::进行中",
+                "value": "进行中"
+              },
+              {
+                "labe": "::已完工",
+                "value": "已完工"
+              },
+              {
+                "labe": "::已验收",
+                "value": "已验收"
+              }
+            ],
+            "placeholder": "请选择"
+          },
+          "type": "Select"
+        },
+        "bind": "status",
+        "view": {
+          "type": "Text",
+          "props": {}
+        }
+      },
+      "备注": {
+        "edit": {
+          "props": { "rows": 5 },
+          "type": "TextArea",
+          "bind": "remark"
+        },
+        "bind": "remark"
+      }
+    }
+  },
+  "name": "工程进度"
+}

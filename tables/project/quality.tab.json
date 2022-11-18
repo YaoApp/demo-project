@@ -1,0 +1,256 @@
+{
+  "name": "质量管理",
+  "action": {
+    "bind": {
+      "model": "quality",
+      "option": {
+        "withs": { "project": {}, "department": {}, "user": {} }
+      }
+    }
+  },
+  "layout": {
+    "primary": "id",
+    "header": {
+      "preset": {},
+      "actions": []
+    },
+    "filter": {
+      "columns": [
+        {
+          "name": "项目名称",
+          "width": 4
+        }
+      ],
+      "actions": [
+        {
+          "icon": "icon-plus",
+          "width": 3,
+          "action": {
+            "Common.openModal": {
+              "width": 640,
+              "Form": {
+                "type": "edit",
+                "model": "quality"
+              }
+            }
+          },
+          "title": "添加"
+        }
+      ]
+    },
+    "table": {
+      "columns": [
+        {
+          "name": "项目名称"
+        },
+        {
+          "name": "执行部门"
+        },
+        {
+          "name": "检查人"
+        },
+        {
+          "name": "执行情况"
+        },
+        {
+          "name": "检查结论"
+        },
+        {
+          "name": "检查日期"
+        },
+        {
+          "name": "改进要求",
+          "width": 150
+        },
+
+        {
+          "name": "备注"
+        }
+      ],
+      "operation": {
+        "fold": false,
+        "actions": [
+          {
+            "action": {
+              "Common.openModal": {
+                "width": 640,
+                "Form": {
+                  "type": "view",
+                  "model": "quality"
+                }
+              }
+            },
+            "title": "查看",
+            "icon": "icon-eye"
+          },
+          {
+            "title": "编辑",
+            "icon": "icon-edit-2",
+            "action": {
+              "Common.openModal": {
+                "Form": {
+                  "type": "edit",
+                  "model": "quality"
+                }
+              }
+            }
+          },
+          {
+            "icon": "icon-trash-2",
+            "action": {
+              "Table.delete": {}
+            },
+            "style": "danger",
+            "confirm": {
+              "title": "提示",
+              "desc": "确认删除，删除后数据无法恢复？"
+            },
+            "title": "删除"
+          }
+        ]
+      }
+    }
+  },
+  "fields": {
+    "filter": {
+      "项目名称": {
+        "bind": "where.project_id.eq",
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        }
+      }
+    },
+    "table": {
+      "项目名称": {
+        "view": {
+          "bind": "project.name",
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "project_id"
+      },
+      "执行部门": {
+        "view": {
+          "bind": "department.name",
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.contact.department.Select",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "department_id"
+      },
+      "检查人": {
+        "view": {
+          "bind": "user.name",
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.contact.user.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "user_id"
+      },
+
+      "执行情况": {
+        "edit": {
+          "props": {},
+          "type": "Input",
+          "bind": "content"
+        },
+        "bind": "content",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "检查结论": {
+        "edit": {
+          "props": {},
+          "type": "Input",
+          "bind": "result"
+        },
+        "bind": "result",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "检查日期": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "check_date",
+          "props": {}
+        },
+        "bind": "check_date",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+
+      "改进要求": {
+        "edit": {
+          "props": {},
+          "type": "Input",
+          "bind": "change"
+        },
+        "bind": "change",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+
+      "备注": {
+        "edit": {
+          "props": {},
+          "type": "Input",
+          "bind": "remark"
+        },
+        "bind": "remark",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      }
+    }
+  }
+}

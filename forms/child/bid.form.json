@@ -1,0 +1,166 @@
+{
+  "action": {
+    "bind": {
+      "model": "bid",
+      "option": {
+        "withs": { "user": {}, "company": {} }
+      }
+    },
+    "find": {
+      "guard": "-",
+      "process": "scripts.bid.ChildFind"
+    },
+    "before:save": "scripts.project.Bid"
+  },
+  "layout": {
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "width": 12,
+              "name": "项目名称"
+            },
+            {
+              "width": 12,
+              "name": "登记日期"
+            },
+            {
+              "name": "登记人",
+              "width": 12
+            },
+
+            {
+              "name": "状态",
+              "width": 12
+            },
+            {
+              "name": "保证金",
+              "width": 24
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "primary": "id",
+    "operation": {
+      "preset": {
+        "save": {
+          "back": true
+        },
+        "back": {}
+      },
+      "actions": [
+        {
+          "confirm": {
+            "title": "提示",
+            "desc": "确认删除，删除后数据无法恢复？"
+          },
+          "title": "删除",
+          "icon": "icon-trash-2",
+          "action": {
+            "Form.delete": {
+              "pathname": "/x/Table/project.establish"
+            }
+          },
+          "style": "danger"
+        }
+      ]
+    }
+  },
+  "fields": {
+    "form": {
+      "项目名称": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "disabled": true,
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.InitSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "project_id"
+      },
+      "登记日期": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "sign_date",
+          "props": {}
+        },
+        "bind": "sign_date",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+      "登记人": {
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.contact.user.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "user_id",
+        "view": {
+          "bind": "user.name",
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "保证金": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "bond"
+        },
+        "bind": "bond",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "状态": {
+        "edit": {
+          "props": {
+            "options": [
+              {
+                "labe": "::已中标",
+                "value": "已中标"
+              },
+              {
+                "labe": "::已流标",
+                "value": "已流标"
+              }
+            ],
+            "placeholder": "请选择"
+          },
+          "type": "Select"
+        },
+        "bind": "status",
+        "view": {
+          "type": "Text",
+          "props": {}
+        }
+      }
+    }
+  },
+  "name": "投标"
+}

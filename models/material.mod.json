@@ -1,0 +1,67 @@
+{
+  "name": "建材表",
+  "table": {
+    "name": "material",
+    "comment": "建材表"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "材料名称",
+      "name": "name",
+      "type": "string",
+      "length": 50,
+      "comment": "材料名称"
+    },
+    {
+      "label": "单位",
+      "name": "unit",
+      "type": "string",
+      "length": 20,
+      "comment": "单位",
+      "nullable": true
+    },
+    {
+      "label": "数量",
+      "name": "number",
+      "type": "decimal",
+      "comment": "数量",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "单价",
+      "name": "price",
+      "type": "decimal",
+      "comment": "单价",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "图片",
+      "name": "pic",
+      "type": "json",
+      "comment": "材料图片",
+      "nullable": true
+    },
+    {
+      "label": "库存",
+      "name": "stock",
+      "type": "integer",
+      "comment": "库存",
+      "nullable": true
+    }
+  ],
+  "relations": {},
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

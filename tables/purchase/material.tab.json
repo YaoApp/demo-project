@@ -1,0 +1,181 @@
+{
+  "name": "物料管理",
+  "action": {
+    "bind": {
+      "model": "material",
+      "option": {
+        "withs": {}
+      }
+    }
+  },
+  "layout": {
+    "primary": "id",
+    "header": {
+      "preset": {},
+      "actions": []
+    },
+    "filter": {
+      "columns": [
+        {
+          "name": "名称",
+          "width": 4
+        }
+      ],
+      "actions": [
+        {
+          "icon": "icon-plus",
+          "width": 3,
+          "action": {
+            "Common.openModal": {
+              "width": 640,
+              "Form": {
+                "type": "edit",
+                "model": "purchase.material"
+              }
+            }
+          },
+          "title": "添加"
+        }
+      ]
+    },
+    "table": {
+      "columns": [
+        {
+          "name": "名称"
+        },
+        {
+          "name": "图片"
+        },
+        {
+          "name": "规格"
+        },
+        {
+          "name": "单价"
+        },
+        {
+          "name": "库存"
+        }
+      ],
+      "operation": {
+        "fold": false,
+        "actions": [
+          {
+            "action": {
+              "Common.openModal": {
+                "width": 640,
+                "Form": {
+                  "type": "view",
+                  "model": "purchase.material"
+                }
+              }
+            },
+            "title": "查看",
+            "icon": "icon-eye"
+          },
+          {
+            "title": "编辑",
+            "icon": "icon-edit-2",
+            "action": {
+              "Common.openModal": {
+                "Form": {
+                  "type": "edit",
+                  "model": "purchase.material"
+                }
+              }
+            }
+          },
+          {
+            "icon": "icon-trash-2",
+            "action": {
+              "Table.delete": {}
+            },
+            "style": "danger",
+            "confirm": {
+              "title": "提示",
+              "desc": "确认删除，删除后数据无法恢复？"
+            },
+            "title": "删除"
+          }
+        ]
+      }
+    }
+  },
+  "fields": {
+    "filter": {
+      "名称": {
+        "bind": "where.name.match",
+        "edit": {
+          "type": "Input",
+          "compute": "Trim",
+          "props": {
+            "placeholder": "名称"
+          }
+        }
+      }
+    },
+    "table": {
+      "名称": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "type": "Input",
+          "bind": "name",
+          "props": {}
+        },
+        "bind": "name"
+      },
+      "规格": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "type": "Input",
+          "bind": "unit",
+          "props": {}
+        },
+        "bind": "unit"
+      },
+      "单价": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "type": "Input",
+          "bind": "price",
+          "props": {}
+        },
+        "bind": "price"
+      },
+      "库存": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "type": "Input",
+          "bind": "stock",
+          "props": {}
+        },
+        "bind": "stock"
+      },
+      "图片": {
+        "view": {
+          "type": "Image",
+          "props": {}
+        },
+        "edit": {
+          "type": "Upload",
+          "props": {
+            "filetype": "image",
+            "disabled": true
+          }
+        },
+        "bind": "pic"
+      }
+    }
+  }
+}
