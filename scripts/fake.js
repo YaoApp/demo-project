@@ -408,3 +408,8 @@ function Department() {
     ]
   );
 }
+function Data() {
+  User();
+  Department();
+  return "success";
+}
