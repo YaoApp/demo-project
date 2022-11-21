@@ -28,7 +28,6 @@ Yao deom-project 采用 <a href="https://github.com/YaoApp/yao">Yao 应用引擎
 [线上体验地址](https://demo-project.iqka.com/admin/login/admin)
 默认用户名: `xiang@iqka.com` , 默认密码: `A123456p+`
 
-
 ### 安装
 
 #### 使用 Yao
@@ -36,7 +35,8 @@ Yao deom-project 采用 <a href="https://github.com/YaoApp/yao">Yao 应用引擎
 [安装 YAO](https://yaoapps.com/doc/%E4%BB%8B%E7%BB%8D/%E5%AE%89%E8%A3%85%E8%B0%83%E8%AF%95)
 
 ```bash
-mkdir -p /path/app/root
+mkdir -p /data/app
+cd /data/app
 yao get yaoapp/demo-app
 yao start
 ```
@@ -44,6 +44,8 @@ yao start
 登录管理后台
 
 管理后台地址: `http://<IP>:<PORT>/admin/`
+
+示例:` http://127.0.0.1:5099/admin`
 
 默认用户名: `xiang@iqka.com`
 
@@ -68,4 +70,3 @@ docker run -d --restart unless-stopped --name demo-project -p 5099:5099  yaoapp/
 默认用户名: `xiang@iqka.com`
 
 默认密码: `A123456p+`
-
