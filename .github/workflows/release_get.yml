@@ -23,7 +23,6 @@ jobs:
         run: |
           rm -rf ./.git
           rm -rf ./.github
-          mkdir ../${{ env.IMAGE_NAME }}
           cp -r * ../${{ env.IMAGE_NAME }}/
           zip -q -r latest.zip ../${{ env.IMAGE_NAME }}
 
