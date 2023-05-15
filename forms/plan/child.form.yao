@@ -1,0 +1,340 @@
+{
+  "action": {
+    "bind": {
+      "model": "plan",
+      "option": {
+        "withs": {}
+      }
+    },
+    "find": {
+      "guard": "-",
+      "process": "scripts.plan.Find"
+    },
+
+    "before:save": "scripts.plan.BeforeSave"
+  },
+  "layout": {
+    "actions": [
+      {
+        "title": "保存",
+        "icon": "icon-check",
+
+        "showWhenAdd": true,
+
+        "style": "primary",
+        "action": [
+          {
+            "name": "Submit",
+            "type": "Form.submit",
+            "payload": {}
+          },
+          {
+            "name": "Back",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      },
+      {
+        "title": "返回",
+        "divideLine": true,
+        "showWhenAdd": true,
+        "showWhenView": true,
+        "icon": "icon-arrow-left",
+        "action": [
+          {
+            "name": "closeModal",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      }
+    ],
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "width": 12,
+              "name": "任务名称"
+            },
+            {
+              "width": 12,
+              "name": "上级计划"
+            },
+            {
+              "name": "任务编号",
+              "width": 12
+            },
+            {
+              "name": "类型",
+              "width": 12
+            },
+            {
+              "name": "工程数",
+              "width": 12
+            },
+            {
+              "name": "序号",
+              "width": 12
+            },
+            {
+              "name": "状态",
+              "width": 12
+            },
+            {
+              "name": "进度%",
+              "width": 12
+            },
+            {
+              "name": "负责人",
+              "width": 12
+            },
+            {
+              "name": "负责部门",
+              "width": 12
+            },
+
+            {
+              "name": "计划开始时间",
+              "width": 12
+            },
+            {
+              "name": "计划结束时间",
+              "width": 12
+            },
+            {
+              "name": "实际结束时间",
+              "width": 12
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "primary": "id",
+    "operation": {
+      "preset": {
+        "save": {
+          "back": true
+        },
+        "back": {}
+      },
+      "actions": []
+    }
+  },
+  "fields": {
+    "form": {
+      "上级计划": {
+        "edit": {
+          "props": {
+            "disabled": true,
+            "xProps": {
+              "$remote": {
+                "process": "scripts.plan.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "parent_id"
+      },
+      "任务名称": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "type": "Input",
+          "bind": "name",
+          "props": {}
+        },
+        "bind": "name"
+      },
+      "任务编号": {
+        "bind": "plan_sn",
+        "view": {
+          "type": "Text",
+          "props": {}
+        },
+        "edit": {
+          "props": {},
+          "type": "Input",
+          "bind": "plan_sn"
+        }
+      },
+      "类型": {
+        "edit": {
+          "bind": "type",
+          "props": {
+            "options": [
+              {
+                "labe": "::阶段",
+                "value": "阶段"
+              },
+              {
+                "labe": "::专业",
+                "value": "专业"
+              },
+              {
+                "labe": "::任务",
+                "value": "任务"
+              },
+              {
+                "labe": "::任务包",
+                "value": "任务包"
+              }
+            ],
+            "placeholder": "请选择"
+          },
+          "type": "Select"
+        },
+        "bind": "type"
+      },
+      "工程数": {
+        "bind": "total_number",
+        "view": {
+          "type": "Text",
+          "props": {}
+        },
+        "edit": {
+          "props": {},
+          "type": "Input",
+          "bind": "total_number"
+        }
+      },
+      "序号": {
+        "bind": "order",
+        "view": {
+          "type": "Text",
+          "props": {}
+        },
+        "edit": {
+          "props": {},
+          "type": "Input",
+          "bind": "order"
+        }
+      },
+      "状态": {
+        "edit": {
+          "props": {
+            "options": [
+              {
+                "labe": "::进行中",
+                "value": "进行中"
+              },
+              {
+                "labe": "::已完成",
+                "value": "已完成"
+              }
+            ],
+            "placeholder": "请选择"
+          },
+          "type": "Select"
+        },
+        "bind": "status"
+      },
+      "负责人": {
+        "edit": {
+          "props": {
+            "mode": "multiple",
+            "xProps": {
+              "$remote": {
+                "process": "scripts.contact.user.TagSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select",
+          "bind": "users"
+        },
+        "bind": "users"
+      },
+
+      "预算金额": {
+        "edit": {
+          "bind": "total_money",
+          "props": {
+            "type": "number"
+          },
+          "type": "Input"
+        },
+        "bind": "total_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "负责部门": {
+        "edit": {
+          "props": {
+            "mode": "multiple",
+            "xProps": {
+              "$remote": {
+                "process": "scripts.contact.department.TagSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select",
+          "bind": "department"
+        },
+        "bind": "department"
+      },
+      "进度%": {
+        "edit": {
+          "bind": "progress",
+          "props": {
+            "type": "number"
+          },
+          "type": "Input"
+        },
+        "bind": "progress",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "计划开始时间": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "start_time",
+          "props": {}
+        },
+        "bind": "start_time",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+      "计划结束时间": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "end_time",
+          "props": {}
+        },
+        "bind": "end_time",
+        "view": {
+          "props": { "format": "YYYY-MM-DD" },
+          "type": "Text"
+        }
+      },
+      "实际结束时间": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "actual_time",
+          "props": {}
+        },
+        "bind": "actual_time",
+        "view": {
+          "props": { "format": "YYYY-MM-DD" },
+          "type": "Text"
+        }
+      }
+    }
+  },
+  "name": "子计划"
+}

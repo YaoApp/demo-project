@@ -1,0 +1,152 @@
+{
+  "action": {
+    "bind": {
+      "model": "material",
+      "option": {
+        "withs": {}
+      }
+    }
+  },
+  "layout": {
+    "actions": [
+      {
+        "title": "保存",
+        "icon": "icon-check",
+
+        "showWhenAdd": true,
+
+        "style": "primary",
+        "action": [
+          {
+            "name": "Submit",
+            "type": "Form.submit",
+            "payload": {}
+          },
+          {
+            "name": "Back",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      },
+      {
+        "title": "返回",
+        "divideLine": true,
+        "showWhenAdd": true,
+        "showWhenView": true,
+        "icon": "icon-arrow-left",
+        "action": [
+          {
+            "name": "closeModal",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      }
+    ],
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "name": "名称",
+              "width": 12
+            },
+            {
+              "name": "规格",
+              "width": 12
+            },
+            {
+              "name": "单价",
+              "width": 12
+            },
+            {
+              "name": "库存",
+              "width": 12
+            },
+            {
+              "name": "图片",
+              "width": 24
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "primary": "id",
+    "operation": {
+      "preset": {
+        "save": {
+          "back": true
+        },
+        "back": {}
+      },
+      "actions": [
+        {
+          "confirm": {
+            "title": "提示",
+            "desc": "确认删除，删除后数据无法恢复？"
+          },
+          "title": "删除",
+          "icon": "icon-trash-2",
+          "action": {
+            "Form.delete": {
+              "pathname": "/x/Table/purchase.material"
+            }
+          },
+          "style": "danger"
+        }
+      ]
+    }
+  },
+  "fields": {
+    "form": {
+      "名称": {
+        "edit": {
+          "type": "Input",
+          "bind": "name",
+          "props": {}
+        },
+        "bind": "name"
+      },
+      "规格": {
+        "edit": {
+          "type": "Input",
+          "bind": "unit",
+          "props": {}
+        },
+        "bind": "unit"
+      },
+      "单价": {
+        "edit": {
+          "type": "Input",
+          "bind": "price",
+          "props": { "type": "number" }
+        },
+        "bind": "price"
+      },
+      "库存": {
+        "edit": {
+          "type": "Input",
+          "bind": "stock",
+          "props": { "type": "number" }
+        },
+        "bind": "stock"
+      },
+      "图片": {
+        "view": {
+          "type": "Image",
+          "props": {}
+        },
+        "edit": {
+          "type": "Upload",
+          "props": {
+            "filetype": "image"
+          }
+        },
+        "bind": "pic"
+      }
+    }
+  },
+  "name": "物料"
+}

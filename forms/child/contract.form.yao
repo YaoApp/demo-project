@@ -1,0 +1,90 @@
+{
+  "action": {
+    "bind": {
+      "model": "contract",
+      "option": {
+        "withs": {}
+      }
+    },
+    "find": {
+      "guard": "-",
+      "process": "scripts.contract.ChildFind"
+    }
+  },
+  "layout": {
+    "actions": [
+      {
+        "title": "保存",
+        "icon": "icon-check",
+
+        "showWhenAdd": true,
+
+        "style": "primary",
+        "action": [
+          {
+            "name": "Submit",
+            "type": "Form.submit",
+            "payload": {}
+          },
+          {
+            "name": "Back",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      },
+      {
+        "title": "返回",
+        "divideLine": true,
+        "showWhenAdd": true,
+        "showWhenView": true,
+        "icon": "icon-arrow-left",
+        "action": [
+          {
+            "name": "closeModal",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      }
+    ],
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "width": 24,
+              "name": "合同"
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "primary": "id",
+    "operation": {
+      "preset": {
+        "save": {
+          "back": true
+        },
+        "back": {}
+      },
+      "actions": []
+    }
+  },
+  "fields": {
+    "form": {
+      "合同": {
+        "bind": "id",
+        "edit": {
+          "type": "Table",
+          "props": {
+            "model": "contract.contract",
+            "query": { "where.project_id.eq": "{{id}}" }
+          }
+        }
+      }
+    }
+  },
+  "name": "合同"
+}

@@ -1,0 +1,255 @@
+{
+  "action": {
+    "bind": {
+      "model": "project_establish",
+      "option": {
+        "withs": { "user": {} }
+      }
+    },
+    "find": {
+      "guard": "-",
+      "process": "scripts.project.ChildEstablishFind"
+    },
+    "before:save": "scripts.project.EstablishBeforeSave"
+  },
+  "layout": {
+    "actions": [
+      {
+        "title": "保存",
+        "icon": "icon-check",
+
+        "showWhenAdd": true,
+
+        "style": "primary",
+        "action": [
+          {
+            "name": "Submit",
+            "type": "Form.submit",
+            "payload": {}
+          },
+          {
+            "name": "Back",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      },
+      {
+        "title": "返回",
+        "divideLine": true,
+        "showWhenAdd": true,
+        "showWhenView": true,
+        "icon": "icon-arrow-left",
+        "action": [
+          {
+            "name": "closeModal",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      }
+    ],
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "width": 12,
+              "name": "项目名称"
+            },
+            {
+              "width": 12,
+              "name": "立项日期"
+            },
+            {
+              "name": "建设单位",
+              "width": 12
+            },
+            {
+              "name": "监理单位",
+              "width": 12
+            },
+            {
+              "name": "备注",
+              "width": 24
+            },
+            {
+              "name": "附件",
+              "width": 24
+            },
+            {
+              "name": "项目成员",
+              "width": 24
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "primary": "id",
+    "operation": {
+      "preset": {
+        "save": {
+          "back": true
+        },
+        "back": {}
+      },
+      "actions": [
+        {
+          "confirm": {
+            "title": "提示",
+            "desc": "确认删除，删除后数据无法恢复？"
+          },
+          "title": "删除",
+          "icon": "icon-trash-2",
+          "action": {
+            "Form.delete": {
+              "pathname": "/x/Table/project.establish"
+            }
+          },
+          "style": "danger"
+        }
+      ]
+    }
+  },
+  "fields": {
+    "form": {
+      "项目名称": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "disabled": true,
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.InitSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "project_id"
+      },
+      "立项日期": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "es_date",
+          "props": { "format": "YYYY-MM-DD" }
+        },
+        "bind": "es_date",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+      "建设单位": {
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.company.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "company_id",
+        "view": {
+          "bind": "company.name",
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "监理单位": {
+        "edit": {
+          "bind": "monitor_company",
+          "props": {},
+          "type": "Input"
+        },
+        "bind": "monitor_company",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+
+      "预计合同金额": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "total_money"
+        },
+        "bind": "total_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+
+      "状态": {
+        "edit": {
+          "props": {
+            "options": [
+              {
+                "labe": "::已通过",
+                "value": "已通过"
+              },
+              {
+                "labe": "::进行中",
+                "value": "进行中"
+              },
+              {
+                "labe": "::已完成",
+                "value": "已完成"
+              }
+            ],
+            "placeholder": "请选择"
+          },
+          "type": "Select"
+        },
+        "bind": "status",
+        "view": {
+          "type": "Text",
+          "props": {}
+        }
+      },
+      "备注": {
+        "edit": {
+          "props": { "rows": 5 },
+          "type": "TextArea",
+          "bind": "remark"
+        },
+        "bind": "remark"
+      },
+      "附件": {
+        "edit": {
+          "props": {
+            "filetype": "file",
+            "api": "/api/xiang/storage/upload"
+          },
+          "type": "Upload",
+
+          "bind": "file"
+        },
+        "bind": "file"
+      },
+
+      "项目成员": {
+        "bind": "material_data",
+        "edit": {
+          "type": "List",
+          "props": { "name": "user", "showLabel": false }
+        }
+      }
+    }
+  },
+  "name": "项目立项"
+}

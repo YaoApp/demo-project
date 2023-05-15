@@ -3,7 +3,7 @@
   "name": "::Demo Application",
   "short": "::Demo",
   "description": "::Another yao application",
-  "version": "0.10.2",
+  "version": "yao-0.10.3-dev",
   "adminRoot": "admin",
   "setup": "scripts.fake.Data",
   "menu": {

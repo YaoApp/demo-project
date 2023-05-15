@@ -1,0 +1,61 @@
+{
+  "name": "记录表",
+  "action": { "bind": { "model": "project_establish" } },
+  "layout": {
+    "list": {
+      "props": {},
+      "columns": [
+        {
+          "name": "姓名",
+          "width": 8
+        },
+        {
+          "name": "手机号码",
+          "width": 8
+        },
+        {
+          "name": "备注",
+          "width": 8
+        }
+      ]
+    }
+  },
+  "fields": {
+    "list": {
+      "姓名": {
+        "edit": {
+          "props": {},
+          "type": "Input"
+        },
+        "bind": "name",
+        "view": {
+          "type": "Text",
+          "props": {}
+        }
+      },
+
+      "手机号码": {
+        "bind": "number",
+        "view": {
+          "type": "Text",
+          "props": {}
+        },
+        "edit": {
+          "props": { "type": "number" },
+          "type": "Input"
+        }
+      },
+      "备注": {
+        "bind": "remark",
+        "view": {
+          "type": "Text",
+          "props": {}
+        },
+        "edit": {
+          "props": {},
+          "type": "Input"
+        }
+      }
+    }
+  }
+}

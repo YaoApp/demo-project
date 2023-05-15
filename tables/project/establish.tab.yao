@@ -1,0 +1,221 @@
+{
+  "name": "项目",
+  "action": {
+    "bind": {
+      "model": "project_establish",
+      "option": {
+        "withs": { "project": {}, "company": {}, "user": {} }
+      }
+    }
+  },
+  "layout": {
+    "primary": "id",
+    "header": {
+      "preset": {},
+      "actions": []
+    },
+    "filter": {
+      "columns": [
+        {
+          "name": "项目名称",
+          "width": 4
+        }
+      ],
+      "actions": [
+        {
+          "icon": "icon-plus",
+          "width": 3,
+          "action": {
+            "Common.openModal": {
+              "width": 1200,
+              "Form": {
+                "type": "edit",
+                "model": "project_establish"
+              }
+            }
+          },
+          "title": "添加"
+        }
+      ]
+    },
+    "table": {
+      "columns": [
+        {
+          "width": 200,
+          "name": "项目名称"
+        },
+        {
+          "name": "立项日期",
+          "width": 250
+        },
+        {
+          "width": 150,
+          "name": "项目经理"
+        },
+        {
+          "name": "建设单位",
+          "width": 150
+        },
+        {
+          "name": "监理单位",
+          "width": 150
+        },
+        {
+          "name": "类型",
+          "width": 100
+        }
+      ],
+      "operation": {
+        "fold": false,
+        "actions": [
+          {
+            "action": {
+              "Common.openModal": {
+                "width": 1200,
+                "Form": {
+                  "type": "view",
+                  "model": "project_establish"
+                }
+              }
+            },
+            "title": "查看",
+            "icon": "icon-eye"
+          },
+          {
+            "title": "编辑",
+            "icon": "icon-edit-2",
+            "action": {
+              "Common.openModal": {
+                "Form": {
+                  "type": "edit",
+                  "model": "project_establish"
+                }
+              }
+            }
+          },
+          {
+            "icon": "icon-trash-2",
+            "action": {
+              "Table.delete": {}
+            },
+            "style": "danger",
+            "confirm": {
+              "title": "提示",
+              "desc": "确认删除，删除后数据无法恢复？"
+            },
+            "title": "删除"
+          }
+        ]
+      }
+    }
+  },
+  "fields": {
+    "filter": {
+      "项目名称": {
+        "bind": "where.name.match",
+        "edit": {
+          "type": "Input",
+          "compute": "Trim",
+          "props": {
+            "placeholder": "请输入名称搜索"
+          }
+        }
+      }
+    },
+    "table": {
+      "项目名称": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.InitSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "project.name"
+      },
+      "项目经理": {
+        "bind": "user.name",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "立项日期": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "es_date",
+          "props": {}
+        },
+        "bind": "es_date",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+      "建设单位": {
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.company.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+        "bind": "company_id",
+        "view": {
+          "bind": "company.name",
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "监理单位": {
+        "edit": {
+          "bind": "monitor_company",
+          "props": {},
+          "type": "Input"
+        },
+        "bind": "monitor_company",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+
+      "预计合同金额": {
+        "edit": {
+          "props": {
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "total_money"
+        },
+        "bind": "total_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+
+      "类型": {
+        "bind": "type",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      }
+    }
+  }
+}

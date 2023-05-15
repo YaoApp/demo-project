@@ -1,0 +1,288 @@
+{
+  "action": {
+    "bind": {
+      "model": "purchase_order",
+      "option": {
+        "withs": { "user": {}, "project": {}, "company": {} }
+      }
+    },
+    "before:save": "scripts.purchase.BeforeSave"
+  },
+  "layout": {
+    "actions": [
+      {
+        "title": "保存",
+        "icon": "icon-check",
+
+        "showWhenAdd": true,
+
+        "style": "primary",
+        "action": [
+          {
+            "name": "Submit",
+            "type": "Form.submit",
+            "payload": {}
+          },
+          {
+            "name": "Back",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      },
+      {
+        "title": "返回",
+        "divideLine": true,
+        "showWhenAdd": true,
+        "showWhenView": true,
+        "icon": "icon-arrow-left",
+        "action": [
+          {
+            "name": "closeModal",
+            "type": "Common.closeModal",
+            "payload": {}
+          }
+        ]
+      }
+    ],
+    "form": {
+      "sections": [
+        {
+          "columns": [
+            {
+              "width": 12,
+              "name": "项目名称"
+            },
+            {
+              "name": "订单编号",
+              "width": 12
+            },
+            {
+              "name": "采购员",
+              "width": 12
+            },
+            {
+              "name": "供应商",
+              "width": 12
+            },
+            {
+              "name": "采购日期",
+              "width": 12
+            },
+
+            {
+              "name": "状态",
+              "width": 12
+            },
+            {
+              "name": "备注",
+              "width": 24
+            },
+            {
+              "name": "物料表",
+              "width": 24
+            },
+            {
+              "name": "采购总量",
+              "width": 12
+            },
+            {
+              "name": "采购总金额",
+              "width": 12
+            }
+          ]
+        }
+      ],
+      "props": {}
+    },
+    "primary": "id",
+    "operation": {
+      "preset": {
+        "save": {
+          "back": true
+        },
+        "back": {}
+      },
+      "actions": [
+        {
+          "confirm": {
+            "title": "提示",
+            "desc": "确认删除，删除后数据无法恢复？"
+          },
+          "title": "删除",
+          "icon": "icon-trash-2",
+          "action": {
+            "Form.delete": {
+              "pathname": "/x/Table/project.plan"
+            }
+          },
+          "style": "danger"
+        }
+      ]
+    }
+  },
+  "fields": {
+    "form": {
+      "项目名称": {
+        "view": {
+          "props": {},
+          "type": "Text"
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.project.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        },
+
+        "bind": "project_id"
+      },
+      "采购员": {
+        "bind": "user_id",
+        "view": {
+          "type": "Text",
+          "props": {}
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.contact.user.GetSelect",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        }
+      },
+      "供应商": {
+        "bind": "company_id",
+        "view": {
+          "type": "Text",
+          "props": {}
+        },
+        "edit": {
+          "props": {
+            "xProps": {
+              "$remote": {
+                "process": "scripts.company.GetSupplier",
+                "query": {}
+              }
+            }
+          },
+          "type": "Select"
+        }
+      },
+      "采购日期": {
+        "edit": {
+          "type": "DatePicker",
+          "bind": "order_date",
+          "props": {}
+        },
+        "bind": "order_date",
+        "view": {
+          "props": {
+            "format": "YYYY-MM-DD"
+          },
+          "type": "Text"
+        }
+      },
+      "订单编号": {
+        "edit": {
+          "bind": "order_sn",
+          "props": {},
+          "type": "Input"
+        },
+        "bind": "order_sn",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "采购总量": {
+        "edit": {
+          "props": {
+            "type": "number",
+            "disabled": true
+          },
+          "type": "Input",
+          "bind": "total_number"
+        },
+        "bind": "total_number",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "采购总金额": {
+        "edit": {
+          "props": {
+            "disabled": true,
+            "type": "number"
+          },
+          "type": "Input",
+          "bind": "total_money"
+        },
+        "bind": "total_money",
+        "view": {
+          "props": {},
+          "type": "Text"
+        }
+      },
+      "备注": {
+        "view": {
+          "type": "Text",
+          "props": {}
+        },
+        "edit": {
+          "props": {},
+          "type": "TextArea",
+          "bind": "remark"
+        },
+        "bind": "remark"
+      },
+
+      "状态": {
+        "edit": {
+          "props": {
+            "options": [
+              {
+                "labe": "::已申请",
+                "value": "已申请"
+              },
+              {
+                "labe": "::已通过",
+                "value": "已通过"
+              },
+              {
+                "labe": "::未通过",
+                "value": "未通过"
+              }
+            ],
+            "placeholder": "请选择"
+          },
+          "type": "Select"
+        },
+        "bind": "status",
+        "view": {
+          "type": "Text",
+          "props": {}
+        }
+      },
+
+      "物料表": {
+        "bind": "material_data",
+        "edit": {
+          "type": "List",
+          "props": { "name": "material", "showLabel": false }
+        }
+      }
+    }
+  },
+  "name": "采购"
+}
