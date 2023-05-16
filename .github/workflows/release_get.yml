@@ -27,6 +27,7 @@ jobs:
           cp -r * ../app
           cd ..
           zip -q -r latest.zip ./app
+          ls -a
 
       - name: Configure COS For Silicon Valley
         env:
