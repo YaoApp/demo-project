@@ -56,11 +56,11 @@ yao start
 [安装 Docker](https://docs.docker.com/get-docker/)
 
 ```
-docker pull yaoapp/demo-project:0.10.2-amd64
+docker pull yaoapp/demo-project:yao-0.10.3-dev-amd64
 ```
 
 ```bash
-docker run -d --restart unless-stopped --name demo-project -p 5099:5099  yaoapp/demo-project:0.10.2-amd64
+docker run -d --restart unless-stopped --name demo-project -p 5099:5099 yaoapp/demo-project:yao-0.10.3-dev-amd64
 ```
 
 登录管理后台
@@ -71,10 +71,9 @@ docker run -d --restart unless-stopped --name demo-project -p 5099:5099  yaoapp/
 
 默认密码: `A123456p+`
 
-
-#### AIGC模块
+#### AIGC 模块
 
 在`.env`文件中加入配置:`OPENAI_TEST_KEY=`您的`chatGPT`的秘钥,即可在页面进行指令生成模块
-例如:在界面中的输入框输入 `/module +命令` 比如: `/module 帮我生成一个产品管理模块` 
+例如:在界面中的输入框输入 `/module +命令` 比如: `/module 帮我生成一个产品管理模块`
 
 ![效果](https://release-bj-1252011659.cos.ap-beijing.myqcloud.com/docs/yao-admin/1684205298938.png)
