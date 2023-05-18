@@ -1,0 +1,23 @@
+{
+  "xgen": "1.0",
+  "name": "::Demo Application",
+  "short": "::Demo",
+  "description": "::Another yao application",
+  "version": "yao-0.10.3-dev",
+  "adminRoot": "admin",
+  "setup": "scripts.fake.Data",
+  "menu": {
+    "process": "flows.app.menu",
+    "args": [
+      "demo"
+    ]
+  },
+  "optional": {
+    "hideNotification": true,
+    "hideSetting": false,
+    "neo": {
+      "api": "/neo"
+    }
+  }
+}
+	
